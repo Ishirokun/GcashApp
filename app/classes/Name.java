@@ -1,7 +1,7 @@
 package app.classes;
 
 
-public class Name{
+public class Name {
     String firstName, lastName, middleName;
 
     public Name(String firstName, String lastName, String middleName){
