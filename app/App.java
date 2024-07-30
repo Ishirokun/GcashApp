@@ -59,13 +59,9 @@ public class App{
                         String pin = input.nextLine().trim();
                         if (pin.equals("0")) return;
                         try {
-                            if (!id.matches("[0-9]+")) throw new NonNumericPinException();
-                            System.out.println("Enter your first name : ");
-                            String firstName = input.nextLine().trim();
-                            System.out.println("Enter your last name : ");
-                            String lastName = input.nextLine().trim();
-                            System.out.println("Enter your middle name : ");
-                            String middleName = input.nextLine().trim();
+                            String firstName = CLI.requestString("Enter your first name : ");
+                            String lastName = CLI.requestString("Enter your last name : ");
+                            String middleName = CLI.requestString("Enter your middle name : ");
                             Name name = new Name(firstName, lastName, middleName);
                             user = db.registerAccount(id, pin, name);
                             return;
