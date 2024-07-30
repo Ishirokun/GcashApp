@@ -1,4 +1,6 @@
 package app;
+import app.classes.Account;
+import app.classes.Database;
 import app.exceptions.ExistingAccountException;
 import app.exceptions.NonNumericPinException;
 import app.classes.Name;
@@ -12,31 +14,32 @@ public class App{
     Scanner input = new Scanner(System.in);
     Account user;
 
+    private void userMenu(){
+
+    }
 
     private void login(){
         while(true){
             System.out.println("Type 0 to return to main menu\nYour mobile number:");
             String x = input.nextLine().trim();
-            switch (x) {
-            case "0" -> {
-                    return;
-                }
-            default -> {
+            if (x.equals("0")) {
+                return;
+            } else {
                 Optional<Account> account = db.getAccount(x);
                 if (account.isPresent()) {
                     user = account.get();
                     System.out.println("Enter your 4-digit pin.");
-                    while(true){
+                    while (true) {
                         String pin = input.nextLine().trim();
                         if (pin.equals("0")) return;
-                        if (!user.login(pin)) {
-                            
+                        if (user.login(pin)) {
+                                userMenu();
+                                return;
                         }
                     }
 
-                }else{
-                        System.out.println("Mobile number is not registered.");
-                    }
+                } else {
+                    System.out.println("Mobile number is not registered.");
                 }
             }
         }
@@ -46,26 +49,24 @@ public class App{
         while(true){
             System.out.println("Type 0 to return to main menu\nYour mobile number:");
             String id = input.nextLine().trim();
-            switch (id) {
-            case "0" -> {
-                    return;
-                }
-            default -> {
+            if (id.equals("0")) {
+                return;
+            } else {
                 try {
                     if (db.accountExists(id)) throw new ExistingAccountException();
-                    while(true){
+                    while (true) {
                         System.out.println("Enter 0 to return to main menu\nEnter a 4-digit pin password for your account : ");
                         String pin = input.nextLine().trim();
                         if (pin.equals("0")) return;
                         try {
-                            if (!id.matches("[0-9]")) throw new NonNumericPinException();
+                            if (!id.matches("[0-9]+")) throw new NonNumericPinException();
                             System.out.println("Enter your first name : ");
                             String firstName = input.nextLine().trim();
                             System.out.println("Enter your last name : ");
                             String lastName = input.nextLine().trim();
                             System.out.println("Enter your middle name : ");
                             String middleName = input.nextLine().trim();
-                            Name name = Name(firstName, lastName, middleName);
+                            Name name = new Name(firstName, lastName, middleName);
                             user = db.registerAccount(id, pin, name);
                             return;
                         } catch (NonNumericPinException e) {
@@ -74,7 +75,6 @@ public class App{
                     }
                 } catch (ExistingAccountException e) {
                     System.out.println("The entered mobile number already exists");
-                    }
                 }
             }
         }
@@ -100,12 +100,9 @@ public class App{
                 }
             }
         }
-        
-    }
 
-    public static void main(String[] args) {
-       App application = new App();
-       application.openMenu();
+        public static void main(String[] args) {
+            App application = new App();
+            application.openMenu();
+        }
     }
-}
-
