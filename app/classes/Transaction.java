@@ -1,23 +1,24 @@
-package app;
+package app.classes;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class Transcation{
+public class Transaction{
     final Account sender;
     final Account recipient;
     final LocalDateTime transactionDate = LocalDateTime.now(ZoneId.of("CTT"));
-    final TranscationType type;
+    final TransactionType type;
     final double amount;
     
 
-    Transcation(Account sender, Account recipient, TranscationType type){
+    Transaction(Account sender, Account recipient, TransactionType type){
         this.sender = sender;
         this.recipient = recipient;
         this.type = type;
         this.amount = 0;
     }
 
-    Transcation(Account sender, Account recipient, TranscationType type, double amount){
+    Transaction(Account sender, Account recipient, TransactionType type, double amount){
         this.sender = sender;
         this.recipient = recipient;
         this.type = type;
@@ -28,23 +29,16 @@ public class Transcation{
     @Override
     public String toString(){
         switch(this.type){
-            case TranscationType.RECIEVE -> {
+            case TransactionType.RECIEVE -> {
                 return "Recieved " + this.amount + " from " + this.sender + " on " + this.transactionDate.toString();
             }
-            case TranscationType.SEND -> {
+            case TransactionType.SEND -> {
                 return "Sent " + this.amount + " to " + this.recipient + " on " + this.transactionDate.toString();
             }
-            case TranscationType.CHECK_BALANCE -> {
+            case TransactionType.CHECK_BALANCE -> {
                 return "Checked Balance on " + this.transactionDate.toString();
             }
         }
         return "";
     }
 }
-
-enum TranscationType{
-    SEND,
-    RECIEVE,
-    CHECK_BALANCE
-}
-

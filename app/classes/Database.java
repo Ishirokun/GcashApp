@@ -1,9 +1,8 @@
-package app;
+package app.classes;
 
 import app.exceptions.ExistingAccountException;
 import java.util.ArrayList;
 import java.util.Optional;
-import app.classes.Name;
 
 
 public class Database{
@@ -26,15 +25,6 @@ public class Database{
                                     .filter(x -> x.id.equals(id))
                                     .findFirst();
         return result; 
-    }
-
-    public Optional<Transcation> transferMoney(Account sender, String recepientId, double amount){
-        assert sender.isAuthenticated() : "Transfer money from unauthenticed account.";
-        assert sender.getBalance() > amount : "The sender has insufficient funds.";
-        Optional<Account> recepient = getAccount(recepientId);
-        if(recepient.isEmpty()) return null;
-        Account recepientAccount = recepient.get();
-        return Transaction(sender, recepientAccount, amount);
     }
 
 }

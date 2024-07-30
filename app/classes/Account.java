@@ -1,8 +1,9 @@
-package app;
+package app.classes;
 
 import java.util.ArrayList;
 
-import app.classes.Name;
+import app.classes.Transaction;
+import app.classes.TransactionType;
 
 
 public class Account{
@@ -17,11 +18,12 @@ public class Account{
 
     /**
      * Creates an Account object statically from the class method.
+     * The account is then automatically sent into the database.
      * 
-     * @param id
-     * @param password
-     * @param name
-     * @return
+     * @param id Unique Identifier for Account, typically the mobile number.
+     * @param password The new account's password, used for login authentication.
+     * @param name Name object that contains the full name of the user.
+     * @return Account object reference
      */
     public static Account createAccount(String id, String password, Name name){
         return new Account(id, password, name);
@@ -51,7 +53,7 @@ public class Account{
     }
 
     public void recieveMoney(Account sender, double amount) {
-        this.transactions.add(new Transcation(sender, this, TranscationType.RECIEVE, amount));
+        this.transactions.add(new Transaction(sender, this, TransactionType.RECIEVE, amount));
         this.balance += amount;
     }
 
