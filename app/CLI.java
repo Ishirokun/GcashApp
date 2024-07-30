@@ -1,5 +1,7 @@
 package app;
 
+import app.exceptions.RegexViolationException;
+
 import java.util.Scanner;
 
 public class CLI {
@@ -13,5 +15,14 @@ public class CLI {
     public static String requestString(String message){
         System.out.println(message);
         return input.nextLine().trim();
+    }
+
+    public static String requestString(String message, String regex, String errorMessage){
+        while (true){
+            System.out.println(message);
+            String result = input.nextLine().trim();
+            if (result.equals("0")) return "";
+            if (result.matches(regex)) return result;
+        }
     }
 }
