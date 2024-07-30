@@ -6,7 +6,7 @@ import java.util.Optional;
 
 
 public class Database{
-    ArrayList<Account> accountList = new ArrayList<>();
+    public static ArrayList<Account> accountList = new ArrayList<>();
 
     public boolean accountExists(String id) {
         return getAccount(id).isPresent();
